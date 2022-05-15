@@ -54,6 +54,7 @@ const Driving = () => {
     setMessage('Called');
     setTimeout(() => {
       setIsImpacted(false);
+      setMessage('');
     }, 5000);
   }, []);
 
@@ -92,7 +93,7 @@ const Driving = () => {
     if (!isImpacted) {
       return;
     }
-    window.navigator.vibrate(200);
+    window.navigator.vibrate(500);
   }, [isImpacted]);
 
   const handleMotionEvent = (e) => {
@@ -104,7 +105,7 @@ const Driving = () => {
     setDebugZ(Math.round(z * 1000) / 1000);
 
     if (beforeX != -1 && beforeY != -1 && beforeZ != -1) {
-      if (Math.abs(x - beforeX) >= 10 || Math.abs(y - beforeY) >= 10 || Math.abs(z - beforeZ) >= 10) {
+      if (Math.abs(x - beforeX) >= 10 && Math.abs(y - beforeY) >= 10 && Math.abs(z - beforeZ) >= 10) {
         setIsImpacted(true);
       }
     }

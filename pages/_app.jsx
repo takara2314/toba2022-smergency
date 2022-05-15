@@ -25,7 +25,7 @@ const MyApp = ({ Component, pageProps }) => {
       </Head>
 
       <div
-        className="flex relative overflow-hidden"
+        className="flex fixed overflow-hidden"
         ref={rootObj}
       >
         <AnimatePresence
