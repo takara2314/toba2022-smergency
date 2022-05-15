@@ -62,13 +62,13 @@ const Home = () => {
       <ul className="w-full h-72 flex flex-col fixed bottom-0">
         <LabelButton
           num={4}
-          colorClassName="bg-gray-500"
+          colorClassName="bg-neutral-500"
           label="SET UP"
           href="/"
         />
         <LabelButton
           num={4}
-          colorClassName="bg-gray-800"
+          colorClassName="bg-neutral-700"
           label="MEDICAL RECORD"
           href="/"
         />
@@ -80,7 +80,7 @@ const Home = () => {
         />
         <LabelButton
           num={4}
-          colorClassName="bg-gray-800"
+          colorClassName="bg-neutral-700"
           label="SETTING"
           href="/"
         />

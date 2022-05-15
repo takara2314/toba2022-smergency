@@ -11,6 +11,7 @@ import Icon from '../components/icon';
 import IconLabelButton from '../components/iconLabelButton';
 import SosButton from '../components/sosButton';
 import CheckButton from '../components/checkButton';
+import vh from '../utils/vh';
 
 const title = 'ドライブ';
 
@@ -119,7 +120,7 @@ const Driving = () => {
       <section
         className="w-full transition-all"
         style={{
-          height: !isStarted ? '40vh' : '20vh',
+          height: !isStarted ? vh(40) : vh(20),
           backgroundColor: !isImpacted ? 'transparent' : 'rgb(64, 64, 64)'
         }}
       >
@@ -141,7 +142,7 @@ const Driving = () => {
       <section
         className="p-5 w-full bg-neutral-800 rounded-t-2xl flex flex-col items-center justify-around transition-all"
         style={{
-          height: !isStarted ? '60vh' : '80vh',
+          height: !isStarted ? vh(60) : vh(80),
           backgroundColor: !isImpacted ? 'rgb(38, 38, 38)' : 'rgb(64, 64, 64)',
           borderTopLeftRadius: !isImpacted ? '1rem' : '0',
           borderTopRightRadius: !isImpacted ? '1rem' : '0',
@@ -208,11 +209,11 @@ const Driving = () => {
                   <CancelButton
                     onClick={cancelHandler}
                   />
-                  <ul className="w-full text-left flex flex-row">
+                  {/* <ul className="w-full text-left flex flex-row">
                     <li className="w-1/3">X: {debugX}</li>
                     <li className="w-1/3">Y: {debugY}</li>
                     <li className="w-1/3">Z: {debugZ}</li>
-                  </ul>
+                  </ul> */}
                 </div>
               </>
             ) : (

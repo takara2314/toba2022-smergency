@@ -18,7 +18,7 @@ const Main = ({ children, title }) => {
           exit: { opacity: 0, x: 0, y: -100 },
         }}
         transition={{ type: 'linear' }}
-        className="w-full flex flex-col items-center"
+        className="w-full h-full flex flex-col items-center"
       >
         {children}
       </motion.main>

@@ -5,9 +5,17 @@ import { AnimatePresence } from 'framer-motion';
 import '../styles/globals.css';
 
 const MyApp = ({ Component, pageProps }) => {
-  useEffect(() => {
+  const handleResized = () => {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
+
+  useEffect(() => {
+    handleResized();
+    window.addEventListener('resize', handleResized);
+    return () => {
+      window.removeEventListener('resize', handleResized);
+    };
   }, []);
 
   return (
