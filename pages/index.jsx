@@ -58,7 +58,7 @@ const Home = () => {
       <section className="p-5 w-full">
         <div
           className="p-5 mb-5"
-          style={{ padding: isSmall ? '0.25rem' : '1.25rem' }}
+          style={{ padding: isSmall ? '0.05rem' : '1.25rem' }}
         >
           <div className="w-full h-[0.1rem] bg-gray-800 my-3" />
           <h1 className="text-red-200 italic text-xl font-bold">
@@ -93,7 +93,7 @@ const Home = () => {
 
       <ul
         className="w-full flex flex-col fixed bottom-0"
-        style={{ height: isSmall ? '12rem' : '18rem' }}
+        style={{ height: isSmall ? '10rem' : '18rem' }}
       >
         <LabelButton
           num={4}
