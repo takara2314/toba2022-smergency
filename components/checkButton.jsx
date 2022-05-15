@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const CheckButton = ({ okHandler, messageHandler, callHandler }) => {
+const CheckButton = ({ okHandler, messageHandler, callHandler, isSmall }) => {
   const [count, setCount] = useState(15);
 
   useEffect(() => {
@@ -22,20 +22,23 @@ const CheckButton = ({ okHandler, messageHandler, callHandler }) => {
     <>
       <div className="flex flex-row justify-between">
         <button
-          className="w-[47%] bg-neutral-500 text-xl rounded-xl p-8"
+          className="w-[47%] bg-neutral-500 text-xl rounded-xl"
+          style={{ padding: isSmall ? '1rem' : '2rem' }}
           onClick={okHandler}
         >
           {'I\'m OK'}
         </button>
         <button
-          className="w-[47%] bg-neutral-500 text-xl rounded-xl p-8"
+          className="w-[47%] bg-neutral-500 text-xl rounded-xl"
+          style={{ padding: isSmall ? '1rem' : '2rem' }}
           onClick={messageHandler}
         >
           Quick text message
         </button>
       </div>
       <button
-        className="w-full bg-red-500 text-xl rounded-xl p-8"
+        className="w-full bg-red-500 text-xl rounded-xl"
+        style={{ padding: isSmall ? '1rem' : '2rem' }}
         onClick={callHandler}
       >
         Call emergency services ... {count}

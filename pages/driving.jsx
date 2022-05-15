@@ -26,6 +26,8 @@ const Driving = () => {
   const [debugY, setDebugY] = useState(-1);
   const [debugZ, setDebugZ] = useState(-1);
 
+  const [isSmall, setIsSmall] = useState(false);
+
   let beforeX = -1;
   let beforeY = -1;
   let beforeZ = -1;
@@ -57,6 +59,23 @@ const Driving = () => {
       setMessage('');
     }, 5000);
   }, []);
+
+  const handleResized = () => {
+    if (window.innerHeight < 700) {
+      setIsSmall(true);
+    } else {
+      setIsSmall(false);
+    }
+  };
+
+  useEffect(() => {
+    handleResized();
+    setTimeout(handleResized, 1000);
+    window.addEventListener('resize', handleResized);
+    return () => {
+      window.removeEventListener('resize', handleResized);
+    };
+  }, [isSmall]);
 
   useEffect(() => {
     if (!isStarted) {
@@ -218,12 +237,21 @@ const Driving = () => {
               </>
             ) : (
               <>
-                <div className="text-[8rem] text-gray-900 bg-neutral-400 rounded-2xl px-10">
+                <div
+                  className="text-gray-900 bg-neutral-400 rounded-2xl px-10"
+                  style={{ fontSize: isSmall ? '4rem' : '8rem' }}
+                >
                   <Icon>
                     car_crash
                   </Icon>
                 </div>
-                <div className="w-full bg-neutral-300 rounded-2xl px-2 py-4 flex flex-row justify-around">
+                <div
+                  className="w-full bg-neutral-300 rounded-2xl px-2 flex flex-row justify-around"
+                  style={{
+                    paddingTop: isSmall ? '0.5rem' : '1rem',
+                    paddingBottom: isSmall ? '0.5rem' : '1rem'
+                  }}
+                >
                   <div className="text-5xl text-red-500">
                     <CenterText>
                       <Icon>
@@ -238,11 +266,15 @@ const Driving = () => {
                   </div>
                 </div>
                 {message === '' ? (
-                  <div className="w-full h-56 flex flex-col justify-between">
+                  <div
+                    className="w-full flex flex-col justify-between"
+                    style={{ height: isSmall ? '11rem' : '14rem' }}
+                  >
                     <CheckButton
                       okHandler={okHandler}
                       messageHandler={messageHandler}
                       callHandler={callHandler}
+                      isSmall={isSmall}
                     />
                   </div>
                 ) : (
