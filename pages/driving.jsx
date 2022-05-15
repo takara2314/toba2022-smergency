@@ -112,7 +112,9 @@ const Driving = () => {
     if (!isImpacted) {
       return;
     }
-    window.navigator.vibrate(500);
+    if (window.navigator.vibrate !== undefined) {
+      window.navigator.vibrate(500);
+    }
   }, [isImpacted]);
 
   const handleMotionEvent = (e) => {
