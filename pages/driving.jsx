@@ -88,6 +88,13 @@ const Driving = () => {
     };
   }, [isStarted]);
 
+  useEffect(() => {
+    if (!isImpacted) {
+      return;
+    }
+    window.navigator.vibrate(200);
+  }, [isImpacted]);
+
   const handleMotionEvent = (e) => {
     const x = e.accelerationIncludingGravity.x;
     const y = e.accelerationIncludingGravity.y;
