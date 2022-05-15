@@ -4,7 +4,6 @@ const CheckButton = ({ okHandler, messageHandler, callHandler }) => {
   const [count, setCount] = useState(15);
 
   useEffect(() => {
-    console.log('start');
     if (count > 0) {
       const id = setInterval(countDown, 1000);
       return () => {
@@ -30,14 +29,14 @@ const CheckButton = ({ okHandler, messageHandler, callHandler }) => {
         </button>
         <button
           className="w-[47%] bg-neutral-500 text-xl rounded-xl p-8"
-          onCheck={messageHandler}
+          onClick={messageHandler}
         >
           Quick text message
         </button>
       </div>
       <button
         className="w-full bg-red-500 text-xl rounded-xl p-8"
-        onCheck={callHandler}
+        onClick={callHandler}
       >
         Call emergency services ... {count}
       </button>

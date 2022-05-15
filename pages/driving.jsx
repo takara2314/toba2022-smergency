@@ -11,6 +11,7 @@ import Icon from '../components/icon';
 import IconLabelButton from '../components/iconLabelButton';
 import SosButton from '../components/sosButton';
 import CheckButton from '../components/checkButton';
+import initArr5x5x3 from '../utils/initArr5x5x3';
 
 const title = 'ドライブ';
 
@@ -24,6 +25,10 @@ const Driving = () => {
   const [debugX, setDebugX] = useState(-1);
   const [debugY, setDebugY] = useState(-1);
   const [debugZ, setDebugZ] = useState(-1);
+
+  let beforeX = -1;
+  let beforeY = -1;
+  let beforeZ = -1;
 
   const startHandler = useCallback(() => {
     setIsStarted(true);
@@ -53,19 +58,53 @@ const Driving = () => {
   }, []);
 
   useEffect(() => {
-    window.addEventListener('devicemotion', handleMotionEvent);
+    if (!isStarted) {
+      return;
+    }
+
+    // 参考: https://qiita.com/okumura_daiki/items/16a09c9c0d0b2509d261
+    if (
+      DeviceMotionEvent &&
+      typeof DeviceMotionEvent.requestPermission === 'function'
+    ) {
+      // iOS 13+ の Safari
+      // 許可を取得
+      DeviceMotionEvent.requestPermission()
+        .then(permissionState => {
+          if (permissionState === 'granted') {
+            // 許可を得られた場合、devicemotionをイベントリスナーに追加
+            window.addEventListener('devicemotion', handleMotionEvent);
+          } else {
+            router.push('/');
+          }
+        })
+        .catch(console.error);
+    } else {
+      window.addEventListener('devicemotion', handleMotionEvent);
+    }
+
     return () => {
       window.removeEventListener('devicemotion', handleMotionEvent);
     };
-  }, []);
+  }, [isStarted]);
 
   const handleMotionEvent = (e) => {
     const x = e.accelerationIncludingGravity.x;
     const y = e.accelerationIncludingGravity.y;
     const z = e.accelerationIncludingGravity.z;
-    setDebugX(x);
-    setDebugY(y);
-    setDebugZ(z);
+    setDebugX(Math.round(x * 1000) / 1000);
+    setDebugY(Math.round(y * 1000) / 1000);
+    setDebugZ(Math.round(z * 1000) / 1000);
+
+    if (beforeX != -1 && beforeY != -1 && beforeZ != -1) {
+      if (Math.abs(x - beforeX) >= 10 || Math.abs(y - beforeY) >= 10 || Math.abs(z - beforeZ) >= 10) {
+        setIsImpacted(true);
+      }
+    }
+
+    beforeX = x;
+    beforeY = y;
+    beforeZ = z;
   };
 
   return (

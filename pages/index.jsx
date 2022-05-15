@@ -59,7 +59,7 @@ const Home = () => {
         </div>
       </section>
 
-      <ul className="w-full h-72 flex flex-col absolute bottom-0">
+      <ul className="w-full h-72 flex flex-col fixed bottom-0">
         <LabelButton
           num={4}
           colorClassName="bg-gray-500"
