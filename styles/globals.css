@@ -9,4 +9,6 @@ body {
     background-color: rgb(127, 86, 85);
     color: white;
     text-align: center;
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
 }

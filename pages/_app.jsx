@@ -1,19 +1,14 @@
 import Head from 'next/head';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { RecoilRoot } from 'recoil';
 import { AnimatePresence } from 'framer-motion';
 import '../styles/globals.css';
 
 const MyApp = ({ Component, pageProps }) => {
-  const rootObj = useRef(null);
-
   useEffect(() => {
-    if (rootObj.current === null) {
-      return;
-    }
-    rootObj.current.style.width = window.innerWidth;
-    rootObj.current.style.height = window.innerHeight;
-  }, [rootObj.current]);
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }, []);
 
   return (
     <RecoilRoot>
@@ -24,18 +19,13 @@ const MyApp = ({ Component, pageProps }) => {
         <meta property="og:locale" content="ja_JP" />
       </Head>
 
-      <div
-        className="flex fixed overflow-hidden"
-        ref={rootObj}
+      <AnimatePresence
+        exitBeforeEnter
+        initial={false}
+        onExitComplete={() => window.scrollTo(0, 0)}
       >
-        <AnimatePresence
-          exitBeforeEnter
-          initial={false}
-          onExitComplete={() => window.scrollTo(0, 0)}
-        >
-          <Component {...pageProps} />
-        </AnimatePresence>
-      </div>
+        <Component {...pageProps} />
+      </AnimatePresence>
     </RecoilRoot>
   );
 };

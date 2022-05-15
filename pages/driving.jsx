@@ -11,7 +11,6 @@ import Icon from '../components/icon';
 import IconLabelButton from '../components/iconLabelButton';
 import SosButton from '../components/sosButton';
 import CheckButton from '../components/checkButton';
-import initArr5x5x3 from '../utils/initArr5x5x3';
 
 const title = 'ドライブ';
 
