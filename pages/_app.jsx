@@ -12,6 +12,7 @@ const MyApp = ({ Component, pageProps }) => {
 
   useEffect(() => {
     handleResized();
+    setTimeout(handleResized, 1000);
     window.addEventListener('resize', handleResized);
     return () => {
       window.removeEventListener('resize', handleResized);
