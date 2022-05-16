@@ -20,11 +20,17 @@ const Driving = () => {
 
   const [isStarted, setIsStarted] = useState(false);
   const [isImpacted, setIsImpacted] = useState(false);
+  const [isMessaging, setIsMessaging] = useState(false);
   const [message, setMessage] = useState('');
+  const [inputMessage, setInputMessage] = useState('help me!');
 
   const [debugX, setDebugX] = useState(-1);
   const [debugY, setDebugY] = useState(-1);
   const [debugZ, setDebugZ] = useState(-1);
+
+  const [impactedX, setImpactedX] = useState(-1);
+  const [impactedY, setImpactedY] = useState(-1);
+  const [impactedZ, setImpactedZ] = useState(-1);
 
   const [isSmall, setIsSmall] = useState(false);
 
@@ -49,10 +55,27 @@ const Driving = () => {
   }, []);
 
   const messageHandler = useCallback(() => {
-
+    setIsMessaging(true);
   }, []);
 
   const callHandler = useCallback(() => {
+    fetch(
+      'https://smergency.herokuapp.com/push',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          'acceleration': {
+            'x': impactedX,
+            'y': impactedY,
+            'z': impactedZ
+          },
+          'detect_at': Date.now(),
+          'message': inputMessage
+        })
+      }
+    );
+
     setMessage('Called');
     setTimeout(() => {
       setIsImpacted(false);
@@ -127,6 +150,9 @@ const Driving = () => {
 
     if (beforeX != -1 && beforeY != -1 && beforeZ != -1) {
       if (Math.abs(x - beforeX) >= 10 && Math.abs(y - beforeY) >= 10 && Math.abs(z - beforeZ) >= 10) {
+        setImpactedX(x);
+        setImpactedY(y);
+        setImpactedZ(z);
         setIsImpacted(true);
       }
     }
@@ -134,6 +160,16 @@ const Driving = () => {
     beforeX = x;
     beforeY = y;
     beforeZ = z;
+  };
+
+  const handleMessageSubmit = () => {
+    callHandler();
+    setIsMessaging(false);
+    setInputMessage('help me!');
+  };
+
+  const handleChangeInputMessage = (e) => {
+    setInputMessage(e.target.value);
   };
 
   return (
@@ -272,12 +308,31 @@ const Driving = () => {
                     className="w-full flex flex-col justify-between"
                     style={{ height: isSmall ? '11rem' : '14rem' }}
                   >
-                    <CheckButton
-                      okHandler={okHandler}
-                      messageHandler={messageHandler}
-                      callHandler={callHandler}
-                      isSmall={isSmall}
-                    />
+                    {!isMessaging ? (
+                      <CheckButton
+                        okHandler={okHandler}
+                        messageHandler={messageHandler}
+                        callHandler={callHandler}
+                        isSmall={isSmall}
+                      />
+                    ) : (
+                      <form onSubmit={handleMessageSubmit}>
+                        <h2 className="text-xl mb-5">
+                          Message
+                        </h2>
+                        <input
+                          className="w-full h-12 bg-neutral-500 px-5 border-2 border-neutral-600 rounded-xl"
+                          value={inputMessage}
+                          onChange={handleChangeInputMessage}
+                        />
+                        <input
+                          type="submit"
+                          className="w-[47%] mt-5 py-1 bg-red-500 text-xl rounded-xl"
+                          onClick={messageHandler}
+                          value="Send"
+                        />
+                      </form>
+                    )}
                   </div>
                 ) : (
                   <div className="text-3xl h-56">
