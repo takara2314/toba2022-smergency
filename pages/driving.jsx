@@ -28,10 +28,6 @@ const Driving = () => {
   const [debugY, setDebugY] = useState(-1);
   const [debugZ, setDebugZ] = useState(-1);
 
-  const [impactedX, setImpactedX] = useState(-1);
-  const [impactedY, setImpactedY] = useState(-1);
-  const [impactedZ, setImpactedZ] = useState(-1);
-
   const [isSmall, setIsSmall] = useState(false);
 
   let beforeX = -1;
@@ -66,11 +62,11 @@ const Driving = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           'acceleration': {
-            'x': impactedX,
-            'y': impactedY,
-            'z': impactedZ
+            'x': debugX,
+            'y': debugY,
+            'z': debugZ
           },
-          'detect_at': Date.now(),
+          'detect_at': new Date().toLocaleString('ja'),
           'message': inputMessage
         })
       }
@@ -81,7 +77,7 @@ const Driving = () => {
       setIsImpacted(false);
       setMessage('');
     }, 5000);
-  }, []);
+  }, [debugX, debugY, debugZ, inputMessage]);
 
   const handleResized = () => {
     if (window.innerHeight < 700) {
@@ -150,9 +146,6 @@ const Driving = () => {
 
     if (beforeX != -1 && beforeY != -1 && beforeZ != -1) {
       if (Math.abs(x - beforeX) >= 10 && Math.abs(y - beforeY) >= 10 && Math.abs(z - beforeZ) >= 10) {
-        setImpactedX(x);
-        setImpactedY(y);
-        setImpactedZ(z);
         setIsImpacted(true);
       }
     }
@@ -323,7 +316,7 @@ const Driving = () => {
                         <input
                           className="w-full h-12 bg-neutral-500 px-5 border-2 border-neutral-600 rounded-xl"
                           value={inputMessage}
-                          onChange={handleChangeInputMessage}
+                          onInput={handleChangeInputMessage}
                         />
                         <input
                           type="submit"
